@@ -6,6 +6,7 @@ import java.util.List;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Color;
+import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -49,8 +50,9 @@ public class MerchantWars extends JavaPlugin {
 		//Game initiation\\
 		Arena arena = new Arena("MerchantWars");
 		arena.setLobbySpawn(new Location(arena.getWorld(), -1258.5, 42, -335.5));
+		arena.setSpectatorSpawn(new Location(arena.getWorld(), -1255, 24, -335));
 		
-		Game game = new Game("MerchantWars", arena, GameStatus.WAITING, this);
+		final Game game = new Game("MerchantWars", arena, GameStatus.WAITING, this);
 		game.setMessagePrefix("[" + ChatColor.AQUA + "Merchant Wars" + ChatColor.RESET + "]");
 		
 		//Setting & Manager Variables\\
@@ -63,6 +65,12 @@ public class MerchantWars extends JavaPlugin {
 		Team blue = new Team(Color.BLUE, ChatColor.BLUE, "Blue");
 		Team green = new Team(Color.GREEN, ChatColor.GREEN, "Green");
 		Team yellow = new Team(Color.YELLOW, ChatColor.YELLOW, "Yellow");
+		
+		red.setAllowTeamDamage(false);
+		blue.setAllowTeamDamage(false);
+		green.setAllowTeamDamage(false);
+		yellow.setAllowTeamDamage(false);
+		
 		teamManager.registerTeams(red, blue, green, yellow);
 		
 		//Set GameSettings\\
@@ -82,6 +90,8 @@ public class MerchantWars extends JavaPlugin {
 		gameSettings.shouldDisableVanillaJoinLeaveMessages(true);
 		gameSettings.setAutomaticCountdown(true);
 		gameSettings.setCountdownTime(5);
+		gameSettings.setSpectatorMode(GameMode.SPECTATOR);
+		gameSettings.setDisplayVanillaDeathMessages(false);
 		
 		
 		//Set Arena Settings\\
@@ -94,6 +104,8 @@ public class MerchantWars extends JavaPlugin {
 		arenaSettings.setAllowWeatherChange(false);
 		arenaSettings.setAllowMobSpawn(false);
 		arenaSettings.setAllowInventoryChange(false);
+		arenaSettings.setKeepInventory(true);
+		
 		
 		
 		//Areas\\
@@ -147,10 +159,14 @@ public class MerchantWars extends JavaPlugin {
 								if(team.getPlayers().size() > 0){
 									board.add(team.getChatColor() + team.getName());
 									for(GamePlayer p : team.getPlayers()){
-										board.add("   " + p.getPlayer().getName() + ": " + Respawns.getRespawns(p));
+										if(Respawns.getRespawns(p) > 0){
+											board.add("   " + p.getPlayer().getName() + ": " + Respawns.getRespawns(p));
+										}else{
+											board.add("   " + p.getPlayer().getName() + ": " + ChatColor.DARK_RED + "✗");
+										}
 									}
 								}else{
-									board.add(team.getChatColor() + team.getName() + "   " + ChatColor.RESET.toString() + ChatColor.BOLD + ChatColor.ITALIC + ChatColor.DARK_RED + "X");
+									board.add(team.getChatColor() + team.getName() + "   " + ChatColor.RESET.toString() + ChatColor.BOLD + ChatColor.ITALIC + ChatColor.BOLD + ChatColor.DARK_RED + "✗");
 								}
 							}
 							

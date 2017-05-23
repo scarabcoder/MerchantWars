@@ -16,13 +16,12 @@ import net.md_5.bungee.api.ChatColor;
 public class PlayerJoinListener implements Listener {
 	
 	@EventHandler
-	public void onJoinGame(PlayerJoinGameEvent e){
+	public void onJoinGame(final PlayerJoinGameEvent e){
 		Team team = e.getGame().addToTeam(e.getPlayer());
 		if(team != null){
 			e.getGame().sendMessage(team.getChatColor() + e.getPlayer().getPlayer().getName() + ChatColor.GREEN + " joined the " + team.getName() + " team!");
 			Coins.setBalance(e.getPlayer(), 15);
 			Respawns.setRespawns(e.getPlayer(), 3);
-			e.getPlayer().getOnlinePlayer().setBedSpawnLocation(e.getGame().getArea(team.getName() + "home1").getCenter(false));
 			
 			ShopItems.setUnlocked(e.getPlayer(), "chain", false);
 			ShopItems.setUnlocked(e.getPlayer(), "iron", false);

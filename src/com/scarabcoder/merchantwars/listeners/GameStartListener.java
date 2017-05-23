@@ -21,7 +21,7 @@ public class GameStartListener implements Listener {
 	
 	@EventHandler
 	public void onGameStart(GameStartEvent e){
-		Game game = e.getGame();
+		final Game game = e.getGame();
 		List<String> msgs = Arrays.asList(
 				ChatColor.RED + "======== " + ChatColor.RESET.toString() + ChatColor.AQUA + ChatColor.BOLD.toString() + "Merchant Wars" + ChatColor.RESET + ChatColor.RED + " ========",
 				ChatColor.GREEN + "Carry your trading merchant back and forth across the map to earn coins. Upgrade your gear and buy more respawns at merchant stalls on both sides of the map. Stop enemy teams from getting their merchant across!",
