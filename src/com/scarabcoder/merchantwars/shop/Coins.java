@@ -13,7 +13,7 @@ public class Coins {
 	}
 	
 	public static void addBalance(GamePlayer player, int bal){
-		balance.put(player, balance.get(player) - bal);
+		balance.put(player, balance.get(player) + bal);
 	}
 	
 	

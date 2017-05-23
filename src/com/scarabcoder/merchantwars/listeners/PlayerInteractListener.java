@@ -23,9 +23,12 @@ public class PlayerInteractListener implements Listener {
 				NPC npc = EntityManager.getNPC(v);
 				GamePlayer p = PlayerManager.getGamePlayer(e.getPlayer());
 				if(p.isInGame()){
-					if(p.getTeam().equals(npc.getTeam())){
-						p.getOnlinePlayer().addPassenger(npc.getEntity());
-						p.getOnlinePlayer().addPotionEffect(new PotionEffect(PotionEffectType.SLOW, Integer.MAX_VALUE, 1));
+					if(p.getTeam() != null){
+						if(p.getTeam().getName().equals(npc.getTeam().getName())){
+							e.setCancelled(true);
+							p.getOnlinePlayer().addPassenger(npc.getEntity());
+							p.getOnlinePlayer().addPotionEffect(new PotionEffect(PotionEffectType.SLOW, Integer.MAX_VALUE, 1));
+						}
 					}
 				}
 			}

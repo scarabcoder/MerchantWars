@@ -10,7 +10,10 @@ import org.bukkit.event.Listener;
 import com.scarabcoder.gameapi.enums.GameStatus;
 import com.scarabcoder.gameapi.event.GameStartEvent;
 import com.scarabcoder.gameapi.game.Game;
+import com.scarabcoder.gameapi.manager.TeamManager;
+import com.scarabcoder.merchantwars.EntityManager;
 import com.scarabcoder.merchantwars.MerchantWars;
+import com.scarabcoder.merchantwars.NPC;
 
 import net.md_5.bungee.api.ChatColor;
 
@@ -29,6 +32,16 @@ public class GameStartListener implements Listener {
 		}
 		game.getArena().getArenaSettings().allowChat(false);
 		MerchantWars.pregame = true;
+		TeamManager tm = game.getTeamManager();
+		
+		//NPCs
+		NPC redNPC = new NPC(game.getArea("Redhome1").getCenter(false), tm.getTeam("Red"), ChatColor.RED + "Merchant", game.getArea("Redhome1"));
+		NPC blueNPC = new NPC(game.getArea("Bluehome1").getCenter(false), tm.getTeam("Blue"), ChatColor.BLUE + "Merchant", game.getArea("Bluehome1"));
+		NPC greenNPC = new NPC(game.getArea("Greenhome1").getCenter(false), tm.getTeam("Green"), ChatColor.GREEN + "Merchant", game.getArea("Greenhome1"));
+		NPC yellowNPC = new NPC(game.getArea("Yellowhome1").getCenter(false), tm.getTeam("Yellow"), ChatColor.YELLOW + "Merchant", game.getArea("Yellowhome1"));
+		
+		EntityManager.storeNPCs(redNPC, blueNPC, greenNPC, yellowNPC);
+		
 		Bukkit.getScheduler().scheduleSyncDelayedTask(MerchantWars.getPlugin(), new Runnable(){
 
 			@Override

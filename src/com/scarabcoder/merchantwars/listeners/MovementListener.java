@@ -14,7 +14,7 @@ public class MovementListener implements Listener {
 	public void onPlayerMove(PlayerMoveEvent e){
 		GamePlayer player = PlayerManager.getGamePlayer(e.getPlayer());
 		if(player.isInGame() && MerchantWars.pregame){
-			if(e.getFrom().getX() == e.getTo().getX() && e.getFrom().getY() == e.getTo().getY() && e.getFrom().getZ() == e.getTo().getZ()){
+			if(e.getFrom().getX() != e.getTo().getX() || e.getFrom().getY() != e.getTo().getY() || e.getFrom().getZ() != e.getTo().getZ()){
 				e.setCancelled(true);
 			}
 		}
