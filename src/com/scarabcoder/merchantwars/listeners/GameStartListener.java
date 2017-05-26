@@ -10,6 +10,7 @@ import org.bukkit.event.Listener;
 import com.scarabcoder.gameapi.enums.GameStatus;
 import com.scarabcoder.gameapi.event.GameStartEvent;
 import com.scarabcoder.gameapi.game.Game;
+import com.scarabcoder.gameapi.game.GamePlayer;
 import com.scarabcoder.gameapi.manager.TeamManager;
 import com.scarabcoder.merchantwars.EntityManager;
 import com.scarabcoder.merchantwars.MerchantWars;
@@ -41,6 +42,8 @@ public class GameStartListener implements Listener {
 		NPC yellowNPC = new NPC(game.getArea("Yellowhome1").getCenter(false), tm.getTeam("Yellow"), ChatColor.YELLOW + "Merchant", game.getArea("Yellowhome1"));
 		
 		EntityManager.storeNPCs(redNPC, blueNPC, greenNPC, yellowNPC);
+		for(GamePlayer p : e.getGame().getPlayers())
+			MerchantWars.giveDefaultInventory(p);
 		
 		Bukkit.getScheduler().scheduleSyncDelayedTask(MerchantWars.getPlugin(), new Runnable(){
 

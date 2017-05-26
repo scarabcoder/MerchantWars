@@ -7,6 +7,8 @@ import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Villager;
 
+import com.scarabcoder.gameapi.game.GamePlayer;
+
 public class EntityManager {
 	
 	private static HashMap<String, NPC> npcs = new HashMap<String, NPC>();
@@ -25,6 +27,24 @@ public class EntityManager {
 		for(NPC npc : npcs){
 			storeNPC(npc);
 		}
+	}
+	
+	public static boolean isCarryingNPC(GamePlayer player){
+		if(player.isOnline() && player.getOnlinePlayer().getPassengers() != null){
+			if(player.getOnlinePlayer().getPassengers().size() > 0){
+				if(player.getOnlinePlayer().getPassengers().get(0) != null){
+					return isNPC(player.getOnlinePlayer().getPassengers().get(0));
+				}
+			}
+		}
+		return false;
+	}
+	
+	public static NPC getCarryingNPC(GamePlayer player){
+		if(isCarryingNPC(player)){
+			return getNPC((Villager)player.getOnlinePlayer().getPassengers().get(0));
+		}
+		return null;
 	}
 	
 	

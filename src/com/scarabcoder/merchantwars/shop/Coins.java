@@ -19,9 +19,11 @@ public class Coins {
 	
 	public static void removeBalance(GamePlayer player, int bal){
 		addBalance(player, -1 * bal);
+		
 	}
 	
 	public static int getBalance(GamePlayer player){
 		return balance.get(player);
 	}
+	
 }
